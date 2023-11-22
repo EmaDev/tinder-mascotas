@@ -1,7 +1,8 @@
 import styled from 'styled-components';
-import {AiFillHome} from "react-icons/ai";
+import {AiFillHome, AiFillLike} from "react-icons/ai";
 import {BsFillChatFill, BsFillBookmarkFill} from "react-icons/bs";
 import {FaUser} from "react-icons/fa";
+import { ScreenType } from '../screens/Navigator';
 
 const Nav = styled.nav`
    position:fixed;
@@ -20,13 +21,18 @@ const Nav = styled.nav`
    }
 `;
 
-export const BottomBar = () => {
+interface Props {
+  navigate: (screen: ScreenType, goHome?: boolean) => void;
+  actualScreen: ScreenType;
+}
+export const BottomBar = ({actualScreen, navigate}:Props) => {
+  
   return (
     <Nav>
-        <AiFillHome size={"2.5rem"}  color={"000"}/>
-        <BsFillBookmarkFill size={"2.5rem"} color={"#9d9d9d"}/>
-        <BsFillChatFill size={"2.5rem"} color={"#9d9d9d"}/>
-        <FaUser size={"2.5rem"} color={"#9d9d9d"}/>
+        <AiFillHome size={"2.5rem"} color={actualScreen == "Home" ? "000" : "#9d9d9d"} onClick={() => {navigate("Home")}}/>
+        <AiFillLike size={"2.5rem"} color={actualScreen == "Likes" ? "000" : "#9d9d9d"} onClick={() => {navigate("Likes")}}/>
+        <BsFillChatFill size={"2.5rem"} color={actualScreen == "Chats" ? "000" : "#9d9d9d"} onClick={() => {navigate("Chats")}}/>
+        <FaUser size={"2.5rem"} color={actualScreen == "User" ? "000" : "#9d9d9d"} onClick={() => {navigate("User")}}/>
     </Nav>
   )
 }

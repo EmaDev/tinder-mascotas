@@ -1,5 +1,8 @@
 import styled from 'styled-components';
 import {LuSettings2} from "react-icons/lu";
+import { NombreApp } from './NombreApp';
+import { ScreenType } from '../screens/Navigator';
+import { MdKeyboardArrowLeft } from "react-icons/md";
 
 
 const Nav = styled.nav`
@@ -10,8 +13,9 @@ const Nav = styled.nav`
    max-width: 450px;
    z-index: 999;
    display:flex;
-   padding: 1.5rem 1rem;
+   padding: 1.5rem;
    justify-content: space-between;
+   align-items:center;
    border-bottom: 1px solid #e1e1e1;
    background: #fff;
    overflow:hidden;
@@ -19,16 +23,26 @@ const Nav = styled.nav`
    h4{
     margin: 0;
    }
+   .btn:hover{
+    transition: .3s ease all;
+    transform: scale(1.2);
+   }
 `;
 
 interface Props {
-    title: string;   
+    title: ScreenType;   
+    prevScreen: ScreenType;
+    navigate: (screen: ScreenType, goHome?: boolean) => void;
 }
-export const NavBar = ({title}:Props) => {
+export const NavBar = ({title, prevScreen, navigate}:Props) => {
   return (
     <Nav>
-        <h4>{title}</h4>
-        <LuSettings2 size={"2rem"}/>
+        {title != "Home" && 
+          <MdKeyboardArrowLeft size={"3.5rem"} onClick={() => navigate(prevScreen)}/>
+        }
+        <NombreApp/>
+        <LuSettings2 size={"2.5rem"} className="btn"
+        onClick={() => navigate("Settings")}/>
     </Nav>
   )
 }
